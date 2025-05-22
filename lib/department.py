@@ -139,3 +139,8 @@ class Department:
 
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    def employees(self):
+        """Return a list of Employee instances that belong to this department."""
+        from employee import Employee  # avoid circular import
+        return [employee for employee in Employee.get_all() if employee.department_id == self.id]
